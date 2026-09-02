@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="hr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nikolina & Kristijan</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #faf8f5;
+            color: #3d3734;
+            font-family: Georgia, "Times New Roman", serif;
+            overflow-x: hidden;
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+
+        /* =====================================================
+           INTRO
+        ===================================================== */
+
+        #intro {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    rgba(0,0,0,.20),
+                    rgba(0,0,0,.48)
+                ),
+                url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2400&q=95");
+
+            background-size: cover;
+            background-position: center;
+
+            color: white;
+
+            opacity: 1;
+            visibility: visible;
+
+            transition:
+                opacity 1.7s ease,
+                visibility 1.7s ease;
+        }
+
+        #intro.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .intro-content {
+            text-align: center;
+            padding: 25px;
+
+            animation: introIn 2s ease forwards;
+        }
+
+        .intro-content h1 {
+            font-size: clamp(42px, 8vw, 92px);
+            font-weight: normal;
+            letter-spacing: 3px;
+            text-shadow: 0 4px 25px rgba(0,0,0,.6);
+        }
+
+        .intro-line {
+            width: 100px;
+            height: 1px;
+            background: rgba(255,255,255,.85);
+            margin: 28px auto;
+        }
+
+        .intro-date {
+            font-size: clamp(18px, 3vw, 28px);
+            letter-spacing: 8px;
+        }
+
+        @keyframes introIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        main {
+            max-width: 1700px;
+            margin: auto;
+            padding: 75px 25px 100px;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .heading h2 {
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+
+        .heading p {
+            margin-top: 15px;
+            color: #968981;
+            font-size: 17px;
+        }
+
+        .heart {
+            color: #b99384;
+            margin: 0 7px;
+        }
+
+
+        /* =====================================================
+           LOADING
+        ===================================================== */
+
+        #loading {
+            text-align: center;
+            padding: 80px 20px;
+            color: #998d86;
+        }
+
+        .spinner {
+            width: 42px;
+            height: 42px;
+
+            border: 2px solid #ded8d4;
+            border-top-color: #998d86;
+
+            border-radius: 50%;
+
+            animation: spin 1s linear infinite;
+
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+
+        /* =====================================================
+           GALLERY
+        ===================================================== */
+
+        .gallery {
+            columns: 4 300px;
+            column-gap: 16px;
+        }
+
+        .photo {
+            position: relative;
+
+            break-inside: avoid;
+
+            margin-bottom: 16px;
+
+            cursor: pointer;
+
+            overflow: hidden;
+
+            background: #eee;
+
+            border-radius: 4px;
+
+            opacity: 0;
+
+            transform: translateY(20px);
+
+            animation: photoIn .7s ease forwards;
+        }
+
+        .photo img {
+            display: block;
+
+            width: 100%;
+            height: auto;
+
+            /*
+                Važno:
+                nema fiksne visine i nema object-fit: cover.
+
+                Fotografija zadržava ORIGINALNI omjer.
+            */
+
+            transition:
+                transform .65s ease,
+                filter .65s ease;
+        }
+
+        .photo:hover img {
+            transform: scale(1.025);
+            filter: brightness(.88);
+        }
+
+        .photo::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    transparent 65%,
+                    rgba(0,0,0,.12)
+                );
+
+            opacity: 0;
+
+            transition: opacity .4s ease;
+
+            pointer-events: none;
+        }
+
+        .photo:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes photoIn {
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+
+        /* =====================================================
+           ERROR
+        ===================================================== */
+
+        #error {
+            display: none;
+
+            max-width: 650px;
+
+            margin: 60px auto;
+
+            padding: 30px;
+
+            text-align: center;
+
+            background: #f8eeee;
+
+            color: #875f57;
+
+            border-radius: 8px;
+        }
+
+        #error h3 {
+            font-size: 22px;
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+
+
+        /* =====================================================
+           LIGHTBOX
+        ===================================================== */
+
+        #lightbox {
+            position: fixed;
+            inset: 0;
+
+            z-index: 10000;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px;
+
+            background: rgba(0,0,0,.96);
+
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+
+            transition:
+                opacity .3s ease,
+                visibility .3s ease;
+        }
+
+        #lightbox.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        #lightbox-image {
+            display: block;
+
+            /*
+                Maksimalna veličina koju ekran može prikazati.
+                Slika se NE rasteže.
+            */
+
+            max-width: 94vw;
+            max-height: 91vh;
+
+            width: auto;
+            height: auto;
+
+            object-fit: contain;
+
+            box-shadow:
+                0 15px 70px rgba(0,0,0,.65);
+
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        #close {
+            position: absolute;
+
+            top: 12px;
+            right: 25px;
+
+            z-index: 20;
+
+            color: white;
+
+            font-family: Arial, sans-serif;
+            font-size: 46px;
+            font-weight: 200;
+
+            cursor: pointer;
+
+            line-height: 1;
+        }
+
+        .nav {
+            position: absolute;
+
+            top: 50%;
+            transform: translateY(-50%);
+
+            z-index: 20;
+
+            width: 65px;
+            height: 85px;
+
+            border: 0;
+
+            background: rgba(255,255,255,.07);
+
+            color: white;
+
+            font-size: 42px;
+
+            cursor: pointer;
+
+            transition:
+                background .2s ease;
+        }
+
+        .nav:hover {
+            background: rgba(255,255,255,.18);
+        }
+
+        #prev {
+            left: 15px;
+        }
+
+        #next {
+            right: 15px;
+        }
+
+
+        /* =====================================================
+           COUNTER
+        ===================================================== */
+
+        #counter {
+            position: absolute;
+
+            bottom: 18px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            color: rgba(255,255,255,.8);
+
+            font-family: Arial, sans-serif;
+
+            font-size: 14px;
+
+            letter-spacing: 2px;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            text-align: center;
+
+            padding: 30px;
+
+            color: #a2958e;
+
+            font-size: 15px;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 800px) {
+
+            main {
+                padding:
+                    55px 8px 70px;
+            }
+
+            .gallery {
+                columns: 2 150px;
+                column-gap: 7px;
+            }
+
+            .photo {
+                margin-bottom: 7px;
+            }
+
+            .nav {
+                width: 45px;
+                height: 55px;
+                font-size: 30px;
+                background: rgba(0,0,0,.15);
+            }
+
+            #prev {
+                left: 2px;
+            }
+
+            #next {
+                right: 2px;
+            }
+
+            #close {
+                top: 10px;
+                right: 15px;
+                font-size: 38px;
+            }
+
+            #lightbox {
+                padding: 8px;
+            }
+
+            #lightbox-image {
+                max-width: 98vw;
+                max-height: 87vh;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     UVODNI EKRAN
+===================================================== -->
+
+<section id="intro">
+
+    <div class="intro-content">
+
+        <h1>
+            Nikolina & Kristijan
+        </h1>
+
+        <div class="intro-line"></div>
+
+        <div class="intro-date">
+            05.06.2026
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     GLAVNA STRANICA
+===================================================== -->
+
+<main>
+
+    <div class="heading">
+
+        <h2>
+            Naša svadbena priča
+        </h2>
+
+        <p>
+           ♥ 05.06.2026 ♥
+        </p>
+
+    </div>
+
+
+    <div id="loading">
+
+        <div class="spinner"></div>
+
+        <p>
+            Učitavanje fotografija...
+        </p>
+
+    </div>
+
+
+    <div
+        id="gallery"
+        class="gallery"
+    ></div>
+
+
+    <div id="error">
+
+        <h3>
+            Fotografije se nisu mogle učitati
+        </h3>
+
+        <p id="errorText"></p>
+
+    </div>
+
+</main>
+
+
+
+<footer>
+
+    Nikolina & Kristijan
+    <span class="heart">♥</span>
+    05.06.2026
+
+</footer>
+
+
+
+<!-- =====================================================
+     LIGHTBOX
+===================================================== -->
+
+<div id="lightbox">
+
+    <div id="close">
+        &times;
+    </div>
+
+
+    <button
+        id="prev"
+        class="nav"
+        aria-label="Prethodna fotografija"
+    >
+        &#10094;
+    </button>
+
+
+    <img
+        id="lightbox-image"
+        alt="Nikolina & Kristijan"
+    >
+
+
+    <button
+        id="next"
+        class="nav"
+        aria-label="Sljedeća fotografija"
+    >
+        &#10095;
+    </button>
+
+
+    <div id="counter"></div>
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================================
+   GOOGLE DRIVE POSTAVKE
+===================================================== */
+
+
+/*
+    TVOJ FOLDER
+
+    Ovo NE DIRAJ.
+*/
+
+const FOLDER_ID =
+    "1lumAhhZFkOhQQhKUPUVGDFldnEOSYs5d";
+
+
+/*
+    OVDJE ZALIJEPI NOVI API KEY.
+
+    VAŽNO:
+    Nemoj koristiti ključ koji si poslao u razgovoru.
+    Napravi novi ključ u Google Cloud Console.
+
+    Primjer:
+
+    const API_KEY =
+        "AIzaSyxxxxxxxxxxxxxxxxxxxxxxxx";
+*/
+
+const API_KEY =
+    "AIzaSyCQ4UDTW5UlaIp-Jk4yR4Qse6TBOe47Bf8";
+
+
+
+/* =====================================================
+   VARIJABLE
+===================================================== */
+
+let photos = [];
+
+let currentIndex = 0;
+
+
+
+/* =====================================================
+   POMOĆNA FUNKCIJA
+===================================================== */
+
+function driveImageUrl(
+    id,
+    size = 2400
+) {
+
+    return (
+        "https://drive.google.com/thumbnail" +
+        "?id=" +
+        encodeURIComponent(id) +
+        "&sz=w" +
+        size
+    );
+
+}
+
+
+
+/* =====================================================
+   UČITAVANJE FOTOGRAFIJA IZ DRIVEA
+===================================================== */
+
+async function loadPhotos() {
+
+    const loading =
+        document.getElementById("loading");
+
+    const gallery =
+        document.getElementById("gallery");
+
+    const error =
+        document.getElementById("error");
+
+    const errorText =
+        document.getElementById("errorText");
+
+
+    if (
+        API_KEY ===
+        "OVDJE_ZALIJEPI_NOVI_API_KEY"
+    ) {
+
+        loading.style.display = "none";
+
+        error.style.display = "block";
+
+        errorText.textContent =
+            "U kod još nisi zalijepio Google API key.";
+
+        return;
+
+    }
+
+
+    /*
+        Tražimo samo slike iz tvog foldera.
+    */
+
+    const query =
+        `'${FOLDER_ID}' in parents and trashed = false and mimeType contains 'image/'`;
+
+
+    const fields =
+        "files(id,name,mimeType,thumbnailLink,size)";
+
+
+    const url =
+        "https://www.googleapis.com/drive/v3/files" +
+
+        "?q=" +
+        encodeURIComponent(query) +
+
+        "&pageSize=1000" +
+
+        "&orderBy=name" +
+
+        "&fields=" +
+        encodeURIComponent(fields) +
+
+        "&key=" +
+        encodeURIComponent(API_KEY);
+
+
+    try {
+
+        const response =
+            await fetch(url);
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error?.message ||
+                "Google Drive API greška."
+            );
+
+        }
+
+
+        photos =
+            data.files || [];
+
+
+        /*
+            Sortiramo po imenu.
+        */
+
+        photos.sort(
+            (a,b) =>
+                a.name.localeCompare(
+                    b.name,
+                    undefined,
+                    {
+                        numeric: true,
+                        sensitivity: "base"
+                    }
+                )
+        );
+
+
+        loading.style.display =
+            "none";
+
+
+        if (!photos.length) {
+
+            error.style.display =
+                "block";
+
+            errorText.textContent =
+                "U folderu nema fotografija ili folder nije javno dostupan.";
+
+            return;
+
+        }
+
+
+        /*
+            Napravi galeriju.
+        */
+
+        photos.forEach(
+            (photo, index) => {
+
+                createPhoto(
+                    photo,
+                    index
+                );
+
+            }
+        );
+
+    }
+
+
+    catch (errorObject) {
+
+        console.error(
+            errorObject
+        );
+
+        loading.style.display =
+            "none";
+
+        error.style.display =
+            "block";
+
+        errorText.textContent =
+            errorObject.message;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   KREIRANJE SLIKE
+===================================================== */
+
+function createPhoto(
+    photo,
+    index
+) {
+
+    const gallery =
+        document.getElementById(
+            "gallery"
+        );
+
+
+    const container =
+        document.createElement(
+            "div"
+        );
+
+
+    container.className =
+        "photo";
+
+
+    container.style.animationDelay =
+        `${Math.min(index * .025, 1)}s`;
+
+
+    const image =
+        document.createElement(
+            "img"
+        );
+
+
+    /*
+        VAŽNO:
+
+        Koristimo veću verziju za galeriju.
+
+        2400px je dovoljno veliko da
+        fotografija na ekranu izgleda oštro,
+        ali ne šaljemo nepotrebno ogromni
+        original za svaki thumbnail.
+    */
+
+    image.src =
+        driveImageUrl(
+            photo.id,
+            2400
+        );
+
+
+    image.alt =
+        photo.name;
+
+
+    /*
+        Browser učitava slike tek kad
+        se približe ekranu.
+    */
+
+    image.loading =
+        "lazy";
+
+
+    image.decoding =
+        "async";
+
+
+    container.appendChild(
+        image
+    );
+
+
+    gallery.appendChild(
+        container
+    );
+
+
+    container.addEventListener(
+        "click",
+        () => {
+
+            openLightbox(
+                index
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   LIGHTBOX
+===================================================== */
+
+const lightbox =
+    document.getElementById(
+        "lightbox"
+    );
+
+
+const lightboxImage =
+    document.getElementById(
+        "lightbox-image"
+    );
+
+
+const counter =
+    document.getElementById(
+        "counter"
+    );
+
+
+
+function openLightbox(index) {
+
+    currentIndex =
+        index;
+
+
+    showCurrentImage();
+
+
+    lightbox.classList.add(
+        "active"
+    );
+
+
+    document.body.classList.add(
+        "no-scroll"
+    );
+
+}
+
+
+
+function showCurrentImage() {
+
+    const photo =
+        photos[currentIndex];
+
+
+    if (!photo) {
+        return;
+    }
+
+
+    /*
+        Velika verzija.
+
+        Google Drive thumbnail API može
+        vratiti vrlo veliku verziju slike.
+
+        Ako je original manji,
+        Google neće izmišljati dodatne
+        detalje — prikazat će dostupnu
+        kvalitetu.
+    */
+
+    const largeUrl =
+        driveImageUrl(
+            photo.id,
+            6000
+        );
+
+
+    lightboxImage.src =
+        largeUrl;
+
+
+    lightboxImage.alt =
+        photo.name;
+
+
+    counter.textContent =
+        `${currentIndex + 1} / ${photos.length}`;
+
+}
+
+
+
+/* =====================================================
+   ZATVARANJE
+===================================================== */
+
+function closeLightbox() {
+
+    lightbox.classList.remove(
+        "active"
+    );
+
+
+    document.body.classList.remove(
+        "no-scroll"
+    );
+
+
+    /*
+        Nakon animacije makni src.
+    */
+
+    setTimeout(
+        () => {
+
+            if (
+                !lightbox.classList.contains(
+                    "active"
+                )
+            ) {
+
+                lightboxImage.src = "";
+
+            }
+
+        },
+        300
+    );
+
+}
+
+
+
+/* =====================================================
+   SLJEDEĆA / PRETHODNA
+===================================================== */
+
+function nextPhoto() {
+
+    if (!photos.length) {
+        return;
+    }
+
+
+    currentIndex++;
+
+
+    if (
+        currentIndex >=
+        photos.length
+    ) {
+
+        currentIndex = 0;
+
+    }
+
+
+    showCurrentImage();
+
+}
+
+
+
+function previousPhoto() {
+
+    if (!photos.length) {
+        return;
+    }
+
+
+    currentIndex--;
+
+
+    if (currentIndex < 0) {
+
+        currentIndex =
+            photos.length - 1;
+
+    }
+
+
+    showCurrentImage();
+
+}
+
+
+
+/* =====================================================
+   KLIKOVI
+===================================================== */
+
+document
+    .getElementById("close")
+    .addEventListener(
+        "click",
+        closeLightbox
+    );
+
+
+document
+    .getElementById("next")
+    .addEventListener(
+        "click",
+        event => {
+
+            event.stopPropagation();
+
+            nextPhoto();
+
+        }
+    );
+
+
+document
+    .getElementById("prev")
+    .addEventListener(
+        "click",
+        event => {
+
+            event.stopPropagation();
+
+            previousPhoto();
+
+        }
+    );
+
+
+/*
+    Klik na crnu pozadinu
+    također zatvara sliku.
+*/
+
+lightbox.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target ===
+            lightbox
+        ) {
+
+            closeLightbox();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   TIPKOVNICA
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            !lightbox.classList.contains(
+                "active"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            event.key ===
+            "Escape"
+        ) {
+
+            closeLightbox();
+
+        }
+
+
+        if (
+            event.key ===
+            "ArrowRight"
+        ) {
+
+            nextPhoto();
+
+        }
+
+
+        if (
+            event.key ===
+            "ArrowLeft"
+        ) {
+
+            previousPhoto();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   SWIPE NA MOBITELU
+===================================================== */
+
+let touchStartX = 0;
+
+let touchStartY = 0;
+
+
+lightbox.addEventListener(
+    "touchstart",
+    event => {
+
+        touchStartX =
+            event.changedTouches[0].screenX;
+
+        touchStartY =
+            event.changedTouches[0].screenY;
+
+    },
+    {
+        passive: true
+    }
+);
+
+
+lightbox.addEventListener(
+    "touchend",
+    event => {
+
+        const touchEndX =
+            event.changedTouches[0].screenX;
+
+        const touchEndY =
+            event.changedTouches[0].screenY;
+
+
+        const diffX =
+            touchEndX -
+            touchStartX;
+
+        const diffY =
+            touchEndY -
+            touchStartY;
+
+
+        /*
+            Mora biti horizontalni swipe.
+        */
+
+        if (
+            Math.abs(diffX) < 50 ||
+            Math.abs(diffX) < Math.abs(diffY)
+        ) {
+
+            return;
+
+        }
+
+
+        if (diffX < 0) {
+
+            nextPhoto();
+
+        } else {
+
+            previousPhoto();
+
+        }
+
+    },
+    {
+        passive: true
+    }
+);
+
+
+
+/* =====================================================
+   INTRO 5 SEKUNDI
+===================================================== */
+
+setTimeout(
+    () => {
+
+        document
+            .getElementById("intro")
+            .classList.add(
+                "hidden"
+            );
+
+    },
+    5000
+);
+
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadPhotos();
+
+</script>
+
+</body>
+
+</html>
