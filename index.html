@@ -2,12 +2,27 @@
 <html lang="hr">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta
+        name="theme-color"
+        content="#171313"
+    >
 
     <title>Nikolina & Kristijan</title>
 
+
     <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
 
         * {
             box-sizing: border-box;
@@ -15,20 +30,29 @@
             padding: 0;
         }
 
+
         html {
             scroll-behavior: smooth;
         }
 
+
         body {
-            background: #faf8f5;
+            background: #f8f6f3;
             color: #3d3734;
-            font-family: Georgia, "Times New Roman", serif;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
             overflow-x: hidden;
         }
+
 
         body.no-scroll {
             overflow: hidden;
         }
+
 
 
         /* =====================================================
@@ -36,82 +60,307 @@
         ===================================================== */
 
         #intro {
+
             position: fixed;
+
             inset: 0;
+
             z-index: 9999;
 
             display: flex;
+
             align-items: center;
+
             justify-content: center;
 
-            background:
-                linear-gradient(
-                    rgba(0,0,0,.20),
-                    rgba(0,0,0,.48)
-                ),
-                url("https://drive.google.com/thumbnail?id=1eydvV_aokZILZUnT0DiVF65T8Gf9BcqZ&sz=w3000");
+            overflow: hidden;
 
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-color: #111;
+            background: #171313;
 
             color: white;
 
             opacity: 1;
+
             visibility: visible;
 
             transition:
-                opacity 1.7s ease,
-                visibility 1.7s ease;
+                opacity 1.6s ease,
+                visibility 1.6s ease;
+
         }
+
 
         #intro.hidden {
+
             opacity: 0;
+
             visibility: hidden;
+
             pointer-events: none;
+
         }
+
+
+
+        /* =====================================================
+           BLURRED BACKGROUND
+        ===================================================== */
+
+        #intro::before {
+    content: "";
+
+    position: absolute;
+    inset: -50px;
+
+    background-image: url(
+        "https://drive.google.com/thumbnail?id=1eydvV_aokZILZUnT0DiVF65T8Gf9BcqZ&sz=w3000"
+    );
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    filter: blur(35px);
+
+    transform: scale(1.12);
+
+    opacity: .8;
+
+    z-index: 0;
+}
+
+
+
+
+        /* =====================================================
+           DARK OVERLAY
+        ===================================================== */
+
+        #intro::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background: rgba(0, 0, 0, .25);
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+
+
+
+        /* =====================================================
+           INTRO CONTENT
+        ===================================================== */
 
         .intro-content {
-            text-align: center;
-            padding: 25px;
+    position: relative;
+    z-index: 5;
 
-            animation: introIn 2s ease forwards;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+
+
+
+        /* =====================================================
+           MAIN PORTRAIT
+        ===================================================== */
+
+        .intro-photo {
+    position: absolute;
+    z-index: 2;
+
+    width: min(80vw, 650px);
+    height: 92vh;
+
+    background-image: url(
+        "https://drive.google.com/thumbnail?id=1eydvV_aokZILZUnT0DiVF65T8Gf9BcqZ&sz=w6000"
+    );
+
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    filter: none;
+
+    /* lagana sjena samo oko fotografije */
+    filter: drop-shadow(
+        0 15px 35px rgba(0,0,0,.55)
+    );
+}
+
+
+
+
+        /* =====================================================
+           SUBTLE FRAME AROUND PHOTO
+        ===================================================== */
+
+        .intro-photo-frame {
+
+            position: absolute;
+
+            z-index: -1;
+
+            width: min(45vw, 550px);
+
+            height: min(91vh, 880px);
+
+            border:
+
+                1px solid
+                rgba(255,255,255,.15);
+
+            pointer-events: none;
+
         }
+
+
+
+        /* =====================================================
+           INTRO TEXT PANEL
+        ===================================================== */
+
+        .intro-text {
+
+            position: absolute;
+
+            left: 50%;
+
+            bottom: 10%;
+
+            transform: translateX(-50%);
+
+            width: min(92vw, 900px);
+
+            padding: 25px 20px;
+
+            background:
+
+                linear-gradient(
+                    to bottom,
+                    rgba(0,0,0,0),
+                    rgba(0,0,0,.18)
+                );
+
+            text-align: center;
+
+        }
+
+
 
         .intro-content h1 {
-            font-size: clamp(26px, 8vw, 92px);
+
+            font-size:
+                clamp(27px, 5vw, 70px);
+
             font-weight: normal;
+
+            line-height: 1.1;
+
             letter-spacing: 1px;
+
             white-space: nowrap;
-            text-shadow: 0 4px 25px rgba(0,0,0,.6);
+
+            color: #fff;
+
+            text-shadow:
+
+                0 3px 20px rgba(0,0,0,.75),
+
+                0 1px 4px rgba(0,0,0,.9);
+
         }
+
+
 
         .intro-line {
-            width: 100px;
+
+            width: 90px;
+
             height: 1px;
-            background: rgba(255,255,255,.85);
-            margin: 28px auto;
+
+            margin:
+
+                20px auto;
+
+            background:
+
+                rgba(255,255,255,.8);
+
         }
+
+
 
         .intro-date {
-            font-size: clamp(18px, 3vw, 28px);
-            letter-spacing: 8px;
+
+            font-size:
+
+                clamp(16px, 2.5vw, 25px);
+
+            letter-spacing: 7px;
+
+            color: rgba(255,255,255,.95);
+
+            text-shadow:
+
+                0 2px 12px rgba(0,0,0,.9);
+
         }
 
-        @keyframes introIn {
+
+
+        .intro-scroll {
+
+            margin-top: 22px;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 10px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            opacity: .65;
+
+        }
+
+
+
+        @keyframes introContentIn {
 
             from {
+
                 opacity: 0;
-                transform: translateY(25px);
+
+                transform:
+                    scale(.97);
+
             }
 
             to {
+
                 opacity: 1;
-                transform: translateY(0);
+
+                transform:
+                    scale(1);
+
             }
 
         }
+
 
 
         /* =====================================================
@@ -119,32 +368,70 @@
         ===================================================== */
 
         main {
-            max-width: 1700px;
-            margin: auto;
-            padding: 75px 25px 100px;
+
+            width: 100%;
+
+            max-width: 1800px;
+
+            margin: 0 auto;
+
+            padding:
+
+                85px
+                30px
+                90px;
+
         }
+
+
+
+        /* =====================================================
+           HEADING
+        ===================================================== */
 
         .heading {
+
             text-align: center;
+
             margin-bottom: 55px;
+
         }
+
+
 
         .heading h2 {
-            font-size: clamp(32px, 5vw, 52px);
+
+            font-size:
+                clamp(30px, 4vw, 50px);
+
             font-weight: normal;
-            letter-spacing: 1px;
+
+            letter-spacing: .5px;
+
         }
+
+
 
         .heading p {
-            margin-top: 15px;
+
+            margin-top: 14px;
+
             color: #968981;
-            font-size: 17px;
+
+            font-size: 16px;
+
         }
 
+
+
         .heart {
+
             color: #b99384;
+
             margin: 0 7px;
+
         }
+
 
 
         /* =====================================================
@@ -152,32 +439,56 @@
         ===================================================== */
 
         #loading {
+
             text-align: center;
+
             padding: 80px 20px;
+
             color: #998d86;
+
         }
 
+
+
         .spinner {
+
             width: 42px;
+
             height: 42px;
 
-            border: 2px solid #ded8d4;
-            border-top-color: #998d86;
+            margin:
+
+                0 auto
+                20px;
+
+            border:
+
+                2px solid
+                #ded8d4;
+
+            border-top-color:
+                #998d86;
 
             border-radius: 50%;
 
-            animation: spin 1s linear infinite;
+            animation:
+                spin 1s linear infinite;
 
-            margin: 0 auto 20px;
         }
+
+
 
         @keyframes spin {
 
             to {
-                transform: rotate(360deg);
+
+                transform:
+                    rotate(360deg);
+
             }
 
         }
+
 
 
         /* =====================================================
@@ -185,86 +496,128 @@
         ===================================================== */
 
         .gallery {
-            columns: 4 300px;
-            column-gap: 16px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 15px;
+
+            align-items: start;
+
         }
 
+
+
         .photo {
+
             position: relative;
-
-            break-inside: avoid;
-
-            margin-bottom: 16px;
-
-            cursor: pointer;
 
             overflow: hidden;
 
-            background: #eee;
+            background: #e9e5e1;
 
-            border-radius: 4px;
+            border-radius: 5px;
+
+            cursor: pointer;
 
             opacity: 0;
 
-            transform: translateY(20px);
+            transform:
+                translateY(18px);
 
-            animation: photoIn .7s ease forwards;
+            animation:
+                photoIn .7s ease forwards;
+
         }
 
+
+
         .photo img {
+
             display: block;
 
             width: 100%;
+
             height: auto;
 
-            /*
-                Važno:
-                nema fiksne visine i nema object-fit: cover.
+            min-height: 80px;
 
-                Fotografija zadržava ORIGINALNI omjer.
-            */
+            object-fit: contain;
+
+            background: #eeeae7;
 
             transition:
-                transform .65s ease,
-                filter .65s ease;
+
+                transform .6s ease,
+
+                filter .5s ease;
+
         }
+
+
 
         .photo:hover img {
-            transform: scale(1.025);
-            filter: brightness(.88);
+
+            transform:
+                scale(1.025);
+
+            filter:
+                brightness(.88);
+
         }
 
+
+
         .photo::after {
+
             content: "";
 
             position: absolute;
+
             inset: 0;
 
+            pointer-events: none;
+
             background:
+
                 linear-gradient(
-                    transparent 65%,
-                    rgba(0,0,0,.12)
+                    to bottom,
+                    transparent 70%,
+                    rgba(0,0,0,.15)
                 );
 
             opacity: 0;
 
-            transition: opacity .4s ease;
+            transition:
+                opacity .35s ease;
 
-            pointer-events: none;
         }
+
+
 
         .photo:hover::after {
+
             opacity: 1;
+
         }
+
+
 
         @keyframes photoIn {
 
             to {
+
                 opacity: 1;
-                transform: translateY(0);
+
+                transform:
+                    translateY(0);
+
             }
 
         }
+
 
 
         /* =====================================================
@@ -272,6 +625,7 @@
         ===================================================== */
 
         #error {
+
             display: none;
 
             max-width: 650px;
@@ -287,13 +641,21 @@
             color: #875f57;
 
             border-radius: 8px;
+
         }
 
+
+
         #error h3 {
+
             font-size: 22px;
+
             font-weight: normal;
+
             margin-bottom: 15px;
+
         }
+
 
 
         /* =====================================================
@@ -301,112 +663,227 @@
         ===================================================== */
 
         #lightbox {
+
             position: fixed;
+
             inset: 0;
 
             z-index: 10000;
 
             display: flex;
+
             align-items: center;
+
             justify-content: center;
 
-            padding: 30px;
+            padding: 25px;
 
-            background: rgba(0,0,0,.96);
+            background:
+
+                rgba(8,8,8,.97);
 
             opacity: 0;
+
             visibility: hidden;
+
             pointer-events: none;
 
             transition:
+
                 opacity .3s ease,
+
                 visibility .3s ease;
+
         }
+
+
 
         #lightbox.active {
+
             opacity: 1;
+
             visibility: visible;
+
             pointer-events: auto;
+
         }
 
+
+
         #lightbox-image {
+
             display: block;
 
-            /*
-                Maksimalna veličina koju ekran može prikazati.
-                Slika se NE rasteže.
-            */
+            width: auto;
+
+            height: auto;
 
             max-width: 94vw;
-            max-height: 91vh;
 
-            width: auto;
-            height: auto;
+            max-height: 90vh;
 
             object-fit: contain;
 
             box-shadow:
-                0 15px 70px rgba(0,0,0,.65);
+
+                0 15px 70px
+                rgba(0,0,0,.7);
 
             user-select: none;
+
             -webkit-user-drag: none;
+
+            animation:
+                lightboxIn .3s ease;
+
         }
 
+
+
+        @keyframes lightboxIn {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    scale(.97);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    scale(1);
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           CLOSE BUTTON
+        ===================================================== */
+
         #close {
+
             position: absolute;
 
-            top: 12px;
-            right: 25px;
+            top: 15px;
+
+            right: 22px;
 
             z-index: 20;
+
+            width: 48px;
+
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
 
             color: white;
 
             font-family: Arial, sans-serif;
-            font-size: 46px;
+
+            font-size: 38px;
+
             font-weight: 200;
 
             cursor: pointer;
 
-            line-height: 1;
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,.06);
+
+            transition:
+                background .2s ease;
+
         }
 
+
+
+        #close:hover {
+
+            background:
+                rgba(255,255,255,.15);
+
+        }
+
+
+
+        /* =====================================================
+           LIGHTBOX NAVIGATION
+        ===================================================== */
+
         .nav {
+
             position: absolute;
 
             top: 50%;
-            transform: translateY(-50%);
+
+            transform:
+                translateY(-50%);
 
             z-index: 20;
 
             width: 65px;
-            height: 85px;
+
+            height: 90px;
 
             border: 0;
 
-            background: rgba(255,255,255,.07);
+            border-radius: 5px;
+
+            background:
+                rgba(255,255,255,.06);
 
             color: white;
 
-            font-size: 42px;
+            font-size: 38px;
 
             cursor: pointer;
 
             transition:
-                background .2s ease;
+
+                background .2s ease,
+
+                transform .2s ease;
+
         }
+
+
 
         .nav:hover {
-            background: rgba(255,255,255,.18);
+
+            background:
+                rgba(255,255,255,.16);
+
         }
+
+
 
         #prev {
-            left: 15px;
+
+            left: 18px;
+
         }
 
+
+
         #next {
-            right: 15px;
+
+            right: 18px;
+
         }
+
 
 
         /* =====================================================
@@ -414,21 +891,28 @@
         ===================================================== */
 
         #counter {
+
             position: absolute;
 
             bottom: 18px;
+
             left: 50%;
 
-            transform: translateX(-50%);
+            transform:
+                translateX(-50%);
 
-            color: rgba(255,255,255,.8);
+            color:
+                rgba(255,255,255,.8);
 
-            font-family: Arial, sans-serif;
+            font-family:
+                Arial, sans-serif;
 
-            font-size: 14px;
+            font-size: 13px;
 
             letter-spacing: 2px;
+
         }
+
 
 
         /* =====================================================
@@ -436,64 +920,299 @@
         ===================================================== */
 
         footer {
+
             text-align: center;
 
-            padding: 30px;
+            padding:
+
+                25px
+                20px
+                45px;
 
             color: #a2958e;
 
-            font-size: 15px;
+            font-size: 14px;
+
         }
 
 
+
         /* =====================================================
-           MOBILE
+           TABLET
         ===================================================== */
 
-        @media (max-width: 800px) {
-
-            main {
-                padding:
-                    55px 8px 70px;
-            }
+        @media (max-width: 1100px) {
 
             .gallery {
-                columns: 2 150px;
-                column-gap: 7px;
+
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+
             }
+
+        }
+
+
+
+        /* =====================================================
+           MOBITEL
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+
+            /* INTRO */
+
+            .intro-photo {
+
+                width: 90vw;
+
+                height: 84vh;
+
+            }
+
+
+            .intro-photo-frame {
+
+                width: 93vw;
+
+                height: 87vh;
+
+                border-color:
+                    rgba(255,255,255,.11);
+
+            }
+
+
+            .intro-text {
+
+                bottom: 7%;
+
+                padding:
+                    20px 10px;
+
+            }
+
+
+            .intro-content h1 {
+
+                font-size:
+                    clamp(23px, 7.5vw, 42px);
+
+                letter-spacing: 0;
+
+                white-space: nowrap;
+
+            }
+
+
+            .intro-line {
+
+                width: 70px;
+
+                margin:
+                    15px auto;
+
+            }
+
+
+            .intro-date {
+
+                font-size: 15px;
+
+                letter-spacing: 4px;
+
+            }
+
+
+            .intro-scroll {
+
+                display: none;
+
+            }
+
+
+            /* MAIN */
+
+            main {
+
+                padding:
+
+                    55px
+                    7px
+                    65px;
+
+            }
+
+
+            .heading {
+
+                margin-bottom: 35px;
+
+                padding:
+                    0 10px;
+
+            }
+
+
+            .heading h2 {
+
+                font-size: 30px;
+
+            }
+
+
+            .heading p {
+
+                font-size: 14px;
+
+            }
+
+
+            /* GALLERY */
+
+            .gallery {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 6px;
+
+            }
+
 
             .photo {
-                margin-bottom: 7px;
+
+                border-radius: 3px;
+
             }
 
-            .nav {
-                width: 45px;
-                height: 55px;
-                font-size: 30px;
-                background: rgba(0,0,0,.15);
+
+            .photo img {
+
+                min-height: 50px;
+
             }
 
-            #prev {
-                left: 2px;
-            }
 
-            #next {
-                right: 2px;
-            }
-
-            #close {
-                top: 10px;
-                right: 15px;
-                font-size: 38px;
-            }
+            /* LIGHTBOX */
 
             #lightbox {
-                padding: 8px;
+
+                padding: 7px;
+
             }
 
+
             #lightbox-image {
+
                 max-width: 98vw;
+
                 max-height: 87vh;
+
+            }
+
+
+            #close {
+
+                top: 9px;
+
+                right: 10px;
+
+                width: 43px;
+
+                height: 43px;
+
+                font-size: 34px;
+
+            }
+
+
+            .nav {
+
+                width: 43px;
+
+                height: 60px;
+
+                font-size: 28px;
+
+                background:
+                    rgba(0,0,0,.2);
+
+            }
+
+
+            #prev {
+
+                left: 2px;
+
+            }
+
+
+            #next {
+
+                right: 2px;
+
+            }
+
+
+            #counter {
+
+                bottom: 10px;
+
+                font-size: 11px;
+
+            }
+
+
+        }
+
+
+
+        /* =====================================================
+           VERY SMALL PHONES
+        ===================================================== */
+
+        @media (max-width: 380px) {
+
+            .intro-content h1 {
+
+                font-size: 7.2vw;
+
+            }
+
+
+            .intro-date {
+
+                font-size: 14px;
+
+                letter-spacing: 3px;
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           REDUCED MOTION
+        ===================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                animation-duration:
+                    .01ms !important;
+
+                animation-iteration-count:
+                    1 !important;
+
+                transition-duration:
+                    .01ms !important;
+
             }
 
         }
@@ -503,25 +1222,51 @@
 </head>
 
 
+
 <body>
 
 
 <!-- =====================================================
-     UVODNI EKRAN
+     INTRO
 ===================================================== -->
 
 <section id="intro">
 
+
+    <!-- Glavna uspravna fotografija -->
+
+    <div class="intro-photo"></div>
+
+
+    <!-- Suptilni okvir -->
+
+    <div class="intro-photo-frame"></div>
+
+
+    <!-- Tekst -->
+
     <div class="intro-content">
 
-        <h1>
-            Nikolina & Kristijan
-        </h1>
 
-        <div class="intro-line"></div>
+        <div class="intro-text">
 
-        <div class="intro-date">
-            05.06.2026
+            <h1>
+                Nikolina & Kristijan
+            </h1>
+
+
+            <div class="intro-line"></div>
+
+
+            <div class="intro-date">
+                05.06.2026
+            </div>
+
+
+            <div class="intro-scroll">
+                Naša priča
+            </div>
+
         </div>
 
     </div>
@@ -531,10 +1276,11 @@
 
 
 <!-- =====================================================
-     GLAVNA STRANICA
+     MAIN
 ===================================================== -->
 
 <main>
+
 
     <div class="heading">
 
@@ -542,12 +1288,24 @@
             Naša svadbena priča
         </h2>
 
+
         <p>
-           ♥ 05.06.2026 ♥
+
+            05.06.2026
+
+            <span class="heart">
+                ♥
+            </span>
+
+            Zauvijek zajedno
+
         </p>
 
     </div>
 
+
+
+    <!-- Loading -->
 
     <div id="loading">
 
@@ -560,17 +1318,24 @@
     </div>
 
 
+
+    <!-- Gallery -->
+
     <div
         id="gallery"
         class="gallery"
     ></div>
 
 
+
+    <!-- Error -->
+
     <div id="error">
 
         <h3>
             Fotografije se nisu mogle učitati
         </h3>
+
 
         <p id="errorText"></p>
 
@@ -580,10 +1345,18 @@
 
 
 
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
 <footer>
 
     Nikolina & Kristijan
-    <span class="heart">♥</span>
+
+    <span class="heart">
+        ♥
+    </span>
+
     05.06.2026
 
 </footer>
@@ -595,6 +1368,7 @@
 ===================================================== -->
 
 <div id="lightbox">
+
 
     <div id="close">
         &times;
@@ -640,26 +1414,26 @@
 
 
 /*
-    TVOJ FOLDER
+    TVOJ GOOGLE DRIVE FOLDER
 
-    Ovo NE DIRAJ.
+    Ovo NE MIJENJAJ.
 */
 
 const FOLDER_ID =
     "1lumAhhZFkOhQQhKUPUVGDFldnEOSYs5d";
 
 
+
 /*
-    OVDJE ZALIJEPI NOVI API KEY.
+    NOVI GOOGLE API KEY
 
-    VAŽNO:
-    Nemoj koristiti ključ koji si poslao u razgovoru.
-    Napravi novi ključ u Google Cloud Console.
+    OVDJE ZALIJEPI NOVI KLJUČ.
 
-    Primjer:
+    Npr.:
 
     const API_KEY =
         "AIzaSyxxxxxxxxxxxxxxxxxxxxxxxx";
+
 */
 
 const API_KEY =
@@ -668,7 +1442,23 @@ const API_KEY =
 
 
 /* =====================================================
-   VARIJABLE
+   INTRO IMAGE
+===================================================== */
+
+
+/*
+    ID tvoje posebne intro fotografije.
+
+    Ovo NE MIJENJAJ.
+*/
+
+const INTRO_IMAGE_ID =
+    "1eydvV_aokZILZUnT0DiVF65T8Gf9BcqZ";
+
+
+
+/* =====================================================
+   VARIABLES
 ===================================================== */
 
 let photos = [];
@@ -678,7 +1468,7 @@ let currentIndex = 0;
 
 
 /* =====================================================
-   POMOĆNA FUNKCIJA
+   DRIVE IMAGE URL
 ===================================================== */
 
 function driveImageUrl(
@@ -687,11 +1477,17 @@ function driveImageUrl(
 ) {
 
     return (
+
         "https://drive.google.com/thumbnail" +
+
         "?id=" +
+
         encodeURIComponent(id) +
+
         "&sz=w" +
+
         size
+
     );
 
 }
@@ -699,57 +1495,146 @@ function driveImageUrl(
 
 
 /* =====================================================
-   UČITAVANJE FOTOGRAFIJA IZ DRIVEA
+   INTRO IMAGE
+===================================================== */
+
+function setupIntroImage() {
+
+    const imageUrl =
+        driveImageUrl(
+            INTRO_IMAGE_ID,
+            3000
+        );
+
+
+    const introPhoto =
+        document.querySelector(
+            ".intro-photo"
+        );
+
+
+    introPhoto.style.backgroundImage =
+        `url("${imageUrl}")`;
+
+
+
+    /*
+        Istu fotografiju koristimo
+        za zamućenu pozadinu.
+    */
+
+    const style =
+        document.createElement(
+            "style"
+        );
+
+
+    style.textContent = `
+
+        #intro::before {
+
+            background-image:
+
+                linear-gradient(
+                    rgba(0,0,0,.28),
+                    rgba(0,0,0,.50)
+                ),
+
+                url("${imageUrl}");
+
+        }
+
+    `;
+
+
+    document.head.appendChild(
+        style
+    );
+
+}
+
+
+
+/* =====================================================
+   LOAD PHOTOS
 ===================================================== */
 
 async function loadPhotos() {
 
     const loading =
-        document.getElementById("loading");
+        document.getElementById(
+            "loading"
+        );
+
 
     const gallery =
-        document.getElementById("gallery");
+        document.getElementById(
+            "gallery"
+        );
+
 
     const error =
-        document.getElementById("error");
+        document.getElementById(
+            "error"
+        );
+
 
     const errorText =
-        document.getElementById("errorText");
+        document.getElementById(
+            "errorText"
+        );
+
 
 
     if (
+
         API_KEY ===
+
         "OVDJE_ZALIJEPI_NOVI_API_KEY"
+
     ) {
 
-        loading.style.display = "none";
+        loading.style.display =
+            "none";
 
-        error.style.display = "block";
+
+        error.style.display =
+            "block";
+
 
         errorText.textContent =
-            "U kod još nisi zalijepio Google API key.";
+
+            "U HTML kod još nisi zalijepio novi Google API key.";
 
         return;
 
     }
 
 
+
     /*
-        Tražimo samo slike iz tvog foldera.
+        Tražimo samo slike
+        unutar određenog foldera.
     */
 
     const query =
+
         `'${FOLDER_ID}' in parents and trashed = false and mimeType contains 'image/'`;
 
 
+
     const fields =
+
         "files(id,name,mimeType,thumbnailLink,size)";
 
 
+
     const url =
+
         "https://www.googleapis.com/drive/v3/files" +
 
         "?q=" +
+
         encodeURIComponent(query) +
 
         "&pageSize=1000" +
@@ -757,10 +1642,13 @@ async function loadPhotos() {
         "&orderBy=name" +
 
         "&fields=" +
+
         encodeURIComponent(fields) +
 
         "&key=" +
+
         encodeURIComponent(API_KEY);
+
 
 
     try {
@@ -773,39 +1661,59 @@ async function loadPhotos() {
             await response.json();
 
 
+
         if (!response.ok) {
 
             throw new Error(
+
                 data.error?.message ||
+
                 "Google Drive API greška."
+
             );
 
         }
+
 
 
         photos =
             data.files || [];
 
 
+
         /*
-            Sortiramo po imenu.
+            Sortiramo fotografije
+            prirodnim redoslijedom.
         */
 
         photos.sort(
-            (a,b) =>
+
+            (a, b) =>
+
                 a.name.localeCompare(
+
                     b.name,
+
                     undefined,
+
                     {
+
                         numeric: true,
-                        sensitivity: "base"
+
+                        sensitivity:
+                            "base"
+
                     }
+
                 )
+
         );
+
 
 
         loading.style.display =
             "none";
+
 
 
         if (!photos.length) {
@@ -813,19 +1721,23 @@ async function loadPhotos() {
             error.style.display =
                 "block";
 
+
             errorText.textContent =
-                "U folderu nema fotografija ili folder nije javno dostupan.";
+
+                "U Google Drive folderu nema fotografija ili folder nije javno dostupan.";
 
             return;
 
         }
 
 
+
         /*
-            Napravi galeriju.
+            Kreiramo galeriju.
         */
 
         photos.forEach(
+
             (photo, index) => {
 
                 createPhoto(
@@ -834,6 +1746,7 @@ async function loadPhotos() {
                 );
 
             }
+
         );
 
     }
@@ -845,11 +1758,14 @@ async function loadPhotos() {
             errorObject
         );
 
+
         loading.style.display =
             "none";
 
+
         error.style.display =
             "block";
+
 
         errorText.textContent =
             errorObject.message;
@@ -861,7 +1777,7 @@ async function loadPhotos() {
 
 
 /* =====================================================
-   KREIRANJE SLIKE
+   CREATE PHOTO
 ===================================================== */
 
 function createPhoto(
@@ -886,7 +1802,9 @@ function createPhoto(
 
 
     container.style.animationDelay =
+
         `${Math.min(index * .025, 1)}s`;
+
 
 
     const image =
@@ -896,14 +1814,10 @@ function createPhoto(
 
 
     /*
-        VAŽNO:
+        2400px verzija za galeriju.
 
-        Koristimo veću verziju za galeriju.
-
-        2400px je dovoljno veliko da
-        fotografija na ekranu izgleda oštro,
-        ali ne šaljemo nepotrebno ogromni
-        original za svaki thumbnail.
+        Fotografija zadržava
+        svoj originalni omjer.
     */
 
     image.src =
@@ -918,8 +1832,7 @@ function createPhoto(
 
 
     /*
-        Browser učitava slike tek kad
-        se približe ekranu.
+        Lazy loading.
     */
 
     image.loading =
@@ -928,6 +1841,35 @@ function createPhoto(
 
     image.decoding =
         "async";
+
+
+
+    /*
+        Ako browser ne može učitati
+        veću verziju, pokušaj ponovno
+        s manjom verzijom.
+    */
+
+    image.onerror =
+        function () {
+
+            if (
+                !this.dataset.fallback
+            ) {
+
+                this.dataset.fallback =
+                    "true";
+
+                this.src =
+                    driveImageUrl(
+                        photo.id,
+                        1600
+                    );
+
+            }
+
+        };
+
 
 
     container.appendChild(
@@ -940,8 +1882,11 @@ function createPhoto(
     );
 
 
+
     container.addEventListener(
+
         "click",
+
         () => {
 
             openLightbox(
@@ -949,6 +1894,7 @@ function createPhoto(
             );
 
         }
+
     );
 
 }
@@ -956,7 +1902,7 @@ function createPhoto(
 
 
 /* =====================================================
-   LIGHTBOX
+   LIGHTBOX ELEMENTS
 ===================================================== */
 
 const lightbox =
@@ -977,6 +1923,10 @@ const counter =
     );
 
 
+
+/* =====================================================
+   OPEN LIGHTBOX
+===================================================== */
 
 function openLightbox(index) {
 
@@ -1000,6 +1950,10 @@ function openLightbox(index) {
 
 
 
+/* =====================================================
+   SHOW CURRENT IMAGE
+===================================================== */
+
 function showCurrentImage() {
 
     const photo =
@@ -1007,20 +1961,18 @@ function showCurrentImage() {
 
 
     if (!photo) {
+
         return;
+
     }
+
 
 
     /*
         Velika verzija.
 
-        Google Drive thumbnail API može
-        vratiti vrlo veliku verziju slike.
-
-        Ako je original manji,
-        Google neće izmišljati dodatne
-        detalje — prikazat će dostupnu
-        kvalitetu.
+        Pokušavamo dobiti vrlo veliku
+        verziju fotografije.
     */
 
     const largeUrl =
@@ -1039,6 +1991,7 @@ function showCurrentImage() {
 
 
     counter.textContent =
+
         `${currentIndex + 1} / ${photos.length}`;
 
 }
@@ -1046,7 +1999,7 @@ function showCurrentImage() {
 
 
 /* =====================================================
-   ZATVARANJE
+   CLOSE LIGHTBOX
 ===================================================== */
 
 function closeLightbox() {
@@ -1061,25 +2014,27 @@ function closeLightbox() {
     );
 
 
-    /*
-        Nakon animacije makni src.
-    */
-
     setTimeout(
+
         () => {
 
             if (
+
                 !lightbox.classList.contains(
                     "active"
                 )
+
             ) {
 
-                lightboxImage.src = "";
+                lightboxImage.src =
+                    "";
 
             }
 
         },
+
         300
+
     );
 
 }
@@ -1087,13 +2042,15 @@ function closeLightbox() {
 
 
 /* =====================================================
-   SLJEDEĆA / PRETHODNA
+   NEXT
 ===================================================== */
 
 function nextPhoto() {
 
     if (!photos.length) {
+
         return;
+
     }
 
 
@@ -1101,8 +2058,10 @@ function nextPhoto() {
 
 
     if (
+
         currentIndex >=
         photos.length
+
     ) {
 
         currentIndex = 0;
@@ -1116,10 +2075,16 @@ function nextPhoto() {
 
 
 
+/* =====================================================
+   PREVIOUS
+===================================================== */
+
 function previousPhoto() {
 
     if (!photos.length) {
+
         return;
+
     }
 
 
@@ -1141,21 +2106,27 @@ function previousPhoto() {
 
 
 /* =====================================================
-   KLIKOVI
+   BUTTONS
 ===================================================== */
 
 document
     .getElementById("close")
     .addEventListener(
+
         "click",
+
         closeLightbox
+
     );
+
 
 
 document
     .getElementById("next")
     .addEventListener(
+
         "click",
+
         event => {
 
             event.stopPropagation();
@@ -1163,13 +2134,17 @@ document
             nextPhoto();
 
         }
+
     );
+
 
 
 document
     .getElementById("prev")
     .addEventListener(
+
         "click",
+
         event => {
 
             event.stopPropagation();
@@ -1177,16 +2152,19 @@ document
             previousPhoto();
 
         }
+
     );
 
 
-/*
-    Klik na crnu pozadinu
-    također zatvara sliku.
-*/
+
+/* =====================================================
+   BACKGROUND CLICK
+===================================================== */
 
 lightbox.addEventListener(
+
     "click",
+
     event => {
 
         if (
@@ -1199,22 +2177,27 @@ lightbox.addEventListener(
         }
 
     }
+
 );
 
 
 
 /* =====================================================
-   TIPKOVNICA
+   KEYBOARD
 ===================================================== */
 
 document.addEventListener(
+
     "keydown",
+
     event => {
 
         if (
+
             !lightbox.classList.contains(
                 "active"
             )
+
         ) {
 
             return;
@@ -1252,12 +2235,13 @@ document.addEventListener(
         }
 
     }
+
 );
 
 
 
 /* =====================================================
-   SWIPE NA MOBITELU
+   MOBILE SWIPE
 ===================================================== */
 
 let touchStartX = 0;
@@ -1265,29 +2249,39 @@ let touchStartX = 0;
 let touchStartY = 0;
 
 
+
 lightbox.addEventListener(
+
     "touchstart",
+
     event => {
 
         touchStartX =
             event.changedTouches[0].screenX;
 
+
         touchStartY =
             event.changedTouches[0].screenY;
 
     },
+
     {
         passive: true
     }
+
 );
 
 
+
 lightbox.addEventListener(
+
     "touchend",
+
     event => {
 
         const touchEndX =
             event.changedTouches[0].screenX;
+
 
         const touchEndY =
             event.changedTouches[0].screenY;
@@ -1297,18 +2291,24 @@ lightbox.addEventListener(
             touchEndX -
             touchStartX;
 
+
         const diffY =
             touchEndY -
             touchStartY;
 
 
+
         /*
-            Mora biti horizontalni swipe.
+            Ignoriraj vertikalne pokrete.
         */
 
         if (
+
             Math.abs(diffX) < 50 ||
-            Math.abs(diffX) < Math.abs(diffY)
+
+            Math.abs(diffX) <
+            Math.abs(diffY)
+
         ) {
 
             return;
@@ -1316,29 +2316,35 @@ lightbox.addEventListener(
         }
 
 
+
         if (diffX < 0) {
 
             nextPhoto();
 
-        } else {
+        }
+
+        else {
 
             previousPhoto();
 
         }
 
     },
+
     {
         passive: true
     }
+
 );
 
 
 
 /* =====================================================
-   INTRO 5 SEKUNDI
+   INTRO - 5 SEKUNDI
 ===================================================== */
 
 setTimeout(
+
     () => {
 
         document
@@ -1348,7 +2354,9 @@ setTimeout(
             );
 
     },
-    4000
+
+    5000
+
 );
 
 
@@ -1357,9 +2365,13 @@ setTimeout(
    START
 ===================================================== */
 
+setupIntroImage();
+
 loadPhotos();
 
+
 </script>
+
 
 </body>
 
